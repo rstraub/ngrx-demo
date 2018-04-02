@@ -2,21 +2,29 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
 
-
 import {AppComponent} from './app.component';
-import {MatButtonModule} from '@angular/material';
+import {MatToolbarModule} from '@angular/material';
+import {HomeComponent} from './home/home.component';
+import {TodoService} from './todo.service';
+import {TodoListComponent} from './todo-list/todo-list.component';
+import {TodoComponent} from './todo/todo.component';
+import {NavbarComponent} from './navbar/navbar.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    TodoListComponent,
+    TodoComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatButtonModule
+    MatToolbarModule,
   ],
-  providers: [],
+  providers: [TodoService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
