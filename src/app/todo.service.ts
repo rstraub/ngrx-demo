@@ -10,22 +10,28 @@ export class TodoService {
   constructor() {
   }
 
+  private todos = [{
+    completed: false,
+    note: 'Sparkly...',
+    description: 'Clean the kitchen',
+    priority: TodoPriority.HIGH
+  }, {
+    completed: false,
+    note: 'Food',
+    description: 'Get groceries',
+    priority: TodoPriority.MEDIUM
+  }, {
+    completed: true,
+    note: 'Really...',
+    description: 'Take out the trash',
+    priority: TodoPriority.LOW
+  }];
+
   public getTodos(): Observable<Todo[]> {
-    return of([{
-      completed: false,
-      note: 'Sparkly...',
-      description: 'Clean the kitchen',
-      priority: TodoPriority.HIGH
-    }, {
-      completed: false,
-      note: 'Food',
-      description: 'Get groceries',
-      priority: TodoPriority.MEDIUM
-    }, {
-      completed: true,
-      note: 'Really...',
-      description: 'Take out the trash',
-      priority: TodoPriority.LOW
-    }]);
+    return of(this.todos);
+  }
+
+  public addTodo(todo: Todo) {
+    this.todos.push(todo);
   }
 }
