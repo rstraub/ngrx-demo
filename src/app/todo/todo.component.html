@@ -1,7 +1,18 @@
-<div>
-  <mat-icon>note</mat-icon>
-  <span>{{ todo.description }}</span>
-  <span>{{ todo.priority }}</span>
-  <span>{{ todo.completed }}</span>
-  <span>{{ todo.note }}</span>
+<div class="todo-container">
+  <div class="todo-checkbox">
+    <mat-checkbox [checked]="todo.completed" [(ngModel)]="todo.completed"></mat-checkbox>
+  </div>
+  <mat-expansion-panel class="todo-item">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span class="priority {{todo.priority}}">!</span>
+        <span [ngClass]="{'todo--completed': todo.completed}">{{ todo.description }}</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+
+    <h3>Notes:</h3>
+    <p>{{ todo.note }}</p>
+
+  </mat-expansion-panel>
 </div>

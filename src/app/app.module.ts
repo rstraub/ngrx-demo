@@ -3,12 +3,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
-import {MatToolbarModule, MatListModule, MatIconModule} from '@angular/material';
+import {MatToolbarModule, MatListModule, MatIconModule, MatExpansionModule, MatCheckboxModule} from '@angular/material';
 import {HomeComponent} from './home/home.component';
 import {TodoService} from './todo.service';
 import {TodoListComponent} from './todo-list/todo-list.component';
 import {TodoComponent} from './todo/todo.component';
 import {NavbarComponent} from './navbar/navbar.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -22,9 +23,12 @@ import {NavbarComponent} from './navbar/navbar.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     MatToolbarModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatExpansionModule,
+    MatCheckboxModule,
   ],
   providers: [TodoService],
   bootstrap: [AppComponent]

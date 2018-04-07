@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Todo} from './models/todo';
 import {of} from 'rxjs/observable/of';
+import {TodoPriority} from './models/todo-priority';
 
 @Injectable()
 export class TodoService {
@@ -12,14 +13,19 @@ export class TodoService {
   public getTodos(): Observable<Todo[]> {
     return of([{
       completed: false,
-      note: 'nothing to see here',
-      description: 'get smart',
-      priority: 1
+      note: 'Sparkly...',
+      description: 'Clean the kitchen',
+      priority: TodoPriority.HIGH
+    }, {
+      completed: false,
+      note: 'Food',
+      description: 'Get groceries',
+      priority: TodoPriority.MEDIUM
     }, {
       completed: true,
-      note: 'it\'s something!',
-      description: 'do cool stuff',
-      priority: 2
+      note: 'Really...',
+      description: 'Take out the trash',
+      priority: TodoPriority.LOW
     }]);
   }
 }

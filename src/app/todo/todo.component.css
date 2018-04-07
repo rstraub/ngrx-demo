@@ -1,0 +1,33 @@
+.todo-container {
+  display: flex;
+  align-items: center;
+}
+
+.todo-checkbox {
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.todo-item {
+  flex-grow: 11;
+}
+
+.todo--completed {
+  text-decoration: line-through;
+}
+
+.priority {
+  margin-right: 1rem;
+}
+
+.priority.high {
+  color: red;
+}
+
+.priority.medium {
+  color: orange;
+}
+
+.priority.low {
+  color: green;
+}
