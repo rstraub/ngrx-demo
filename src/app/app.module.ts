@@ -44,7 +44,7 @@ import { TodoDialogComponent } from './todo-dialog/todo-dialog.component';
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   entryComponents: [TodoDialogComponent],
   providers: [TodoService],

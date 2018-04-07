@@ -7,7 +7,13 @@ import {Todo} from '../models/todo';
   styleUrls: ['./todo-list.component.css']
 })
 export class TodoListComponent implements OnInit {
-  @Input() public todos: Todo[];
+  public completed: Todo[];
+  public open: Todo[];
+
+  @Input() public set todos(todos: Todo[]) {
+    this.completed = todos.filter(todo => todo.completed);
+    this.open = todos.filter(todo => !todo.completed);
+  }
 
   constructor() { }
 

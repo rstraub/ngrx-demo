@@ -1,3 +1,8 @@
-<div class="todo-list-item" *ngFor="let todo of todos">
+<div class="todo-list-item" *ngFor="let todo of open">
+  <app-todo [todo]="todo"></app-todo>
+</div>
+<h2>Completed</h2>
+<mat-divider class="divider"></mat-divider>
+<div class="todo-list-item" *ngFor="let todo of completed">
   <app-todo [todo]="todo"></app-todo>
 </div>
