@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {Todo} from './models/todo';
 import {of} from 'rxjs/observable/of';
 import {TodoPriority} from './models/todo-priority';
+import {delay} from 'rxjs/operators';
 
 @Injectable()
 export class TodoService {
@@ -28,7 +29,10 @@ export class TodoService {
   }];
 
   public getTodos(): Observable<Todo[]> {
-    return of(this.todos);
+    return of(this.todos)
+      .pipe(
+        delay(500)
+      );
   }
 
   public addTodo(todo: Todo) {

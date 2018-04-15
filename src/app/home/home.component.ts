@@ -12,6 +12,7 @@ import {filter} from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
   public todos: Todo[];
+  public loading: boolean;
 
   constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private todoService: TodoService) {
   }
@@ -21,7 +22,11 @@ export class HomeComponent implements OnInit {
   }
 
   private getTodos() {
-    this.todoService.getTodos().subscribe(todos => this.todos = todos);
+    this.loading = true;
+    this.todoService.getTodos().subscribe(todos => {
+      this.todos = todos;
+      this.loading = false;
+    });
   }
 
   openTodoDialog(): void {

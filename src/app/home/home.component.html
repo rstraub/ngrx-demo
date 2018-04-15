@@ -1,4 +1,12 @@
 <div class="add-button">
-  <button mat-raised-button [color]="'accent'" (click)="openTodoDialog()"><mat-icon>add</mat-icon> New Todo</button>
+  <button mat-raised-button [color]="'accent'" (click)="openTodoDialog()">
+    <mat-icon>add</mat-icon>
+    New Todo
+  </button>
 </div>
-<app-todo-list [todos]="todos"></app-todo-list>
+<app-todo-list *ngIf="!loading; else loader" [todos]="todos"></app-todo-list>
+<ng-template #loader>
+  <div class="loader-container">
+    <mat-spinner class="loader"></mat-spinner>
+  </div>
+</ng-template>

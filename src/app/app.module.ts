@@ -10,7 +10,13 @@ import {
   MatExpansionModule,
   MatCheckboxModule,
   MatButtonModule,
-  MatDialogModule, MatFormFieldModule, MatInputModule, MatSnackBarModule, MatSelectModule
+  MatDialogModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSnackBarModule,
+  MatSelectModule,
+  MatProgressSpinnerModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import {HomeComponent} from './home/home.component';
 import {TodoService} from './todo.service';
@@ -45,6 +51,7 @@ import { TodoDialogComponent } from './todo-dialog/todo-dialog.component';
     MatInputModule,
     MatSnackBarModule,
     MatSelectModule,
+    MatProgressSpinnerModule
   ],
   entryComponents: [TodoDialogComponent],
   providers: [TodoService],

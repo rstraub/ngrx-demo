@@ -2,3 +2,11 @@
   margin-bottom: 1rem;
   text-align: center;
 }
+
+.loader-container {
+  margin-top: 2rem;
+}
+
+.loader {
+  margin: auto;
+}
