@@ -46,9 +46,10 @@ export class TodoService {
     this.todos.splice(index, 1);
   }
 
-  public updateTodo(todo: Todo) {
+  public updateTodo(todo: Todo): Observable<number> {
     const index = this.findTodo(todo.id);
     this.todos.splice(index, 1, todo);
+    return of(todo.id);
   }
 
   public addTodo(todo: Todo): Observable<number> {

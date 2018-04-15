@@ -72,11 +72,12 @@ export class HomeComponent implements OnInit {
       )
       .subscribe(todo => {
         if (isUpdate) {
-          this.todoService.updateTodo(todo);
+          this.todoService.updateTodo(todo)
+            .subscribe(() => this.getTodos());
         } else {
-          this.todoService.addTodo(todo);
+          this.todoService.addTodo(todo)
+            .subscribe(() => this.getTodos());
         }
-        this.getTodos();
         this.snackBar.open(`${message} ${todo.description}`, null, {
           duration: this.SNACKBAR_DURATION
         });
