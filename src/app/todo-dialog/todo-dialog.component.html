@@ -3,19 +3,22 @@
   <h1 mat-dialog-title>Update Todo</h1>
 </ng-template>
 <div mat-dialog-content>
-  <mat-form-field class="form-control">
-    <input matInput placeholder="Description" [(ngModel)]="data.todo.description">
-  </mat-form-field>
-  <mat-select placeholder="Priority" class="form-control" [(ngModel)]="data.todo.priority">
-    <mat-option *ngFor="let priority of priorities" [value]="priority.value">
-      {{ priority.viewValue }}
-    </mat-option>
-  </mat-select>
-  <mat-form-field class="form-control">
-    <textarea matInput placeholder="Notes" [(ngModel)]="data.todo.note"></textarea>
-  </mat-form-field>
+  <form #todoForm="ngForm">
+    <mat-form-field class="form-control">
+      <input matInput placeholder="Description" [(ngModel)]="data.todo.description" name="description" required>
+    </mat-form-field>
+    <mat-select [required]="true" placeholder="Priority" class="form-control" [(ngModel)]="data.todo.priority"
+                name="priority">
+      <mat-option *ngFor="let priority of priorities" [value]="priority.value">
+        {{ priority.viewValue }}
+      </mat-option>
+    </mat-select>
+    <mat-form-field class="form-control">
+      <textarea matInput placeholder="Notes" [(ngModel)]="data.todo.note" name="note"></textarea>
+    </mat-form-field>
+  </form>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  <button mat-button color="primary" [disabled]="todoForm.invalid" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
 </div>
