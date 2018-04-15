@@ -4,6 +4,9 @@ import {TodoService} from '../todo.service';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {TodoDialogComponent} from '../todo-dialog/todo-dialog.component';
 import {filter, map} from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import { AppState, selectLoading } from '../app.reducer';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-home',
@@ -12,22 +15,23 @@ import {filter, map} from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
   public todos: Todo[];
-  public loading: boolean;
+  public loading$: Observable<boolean>;
   private readonly SNACKBAR_DURATION = 3000;
   private readonly DIALOG_SIZE = '500px';
 
-  constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private todoService: TodoService) {
+  constructor(private store: Store<AppState>, private snackBar: MatSnackBar, private dialog: MatDialog, private todoService: TodoService) {
   }
 
   ngOnInit() {
+    this.loading$ = this.store.pipe(select(selectLoading));
     this.getTodos();
   }
 
   private getTodos() {
-    this.loading = true;
+    // this.loading = true;
     this.todoService.getTodos().subscribe(todos => {
       this.todos = todos;
-      this.loading = false;
+      // this.loading = false;
     });
   }
 
