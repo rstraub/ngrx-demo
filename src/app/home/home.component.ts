@@ -7,6 +7,7 @@ import {filter, map} from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { AppState, selectLoading } from '../app.reducer';
 import { Observable } from 'rxjs/Observable';
+import { LoadingTodos, TodosLoaded } from '../app.actions';
 
 @Component({
   selector: 'app-home',
@@ -28,10 +29,10 @@ export class HomeComponent implements OnInit {
   }
 
   private getTodos() {
-    // this.loading = true;
+    this.store.dispatch(new LoadingTodos());
     this.todoService.getTodos().subscribe(todos => {
       this.todos = todos;
-      // this.loading = false;
+      this.store.dispatch(new TodosLoaded());
     });
   }
 

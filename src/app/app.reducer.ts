@@ -1,4 +1,5 @@
 import { createSelector } from '@ngrx/store';
+import { AppActionTypes } from './app.actions';
 
 export interface AppState {
   ui: {
@@ -14,6 +15,10 @@ const initialState: AppState = {
 
 export function appReducer(state = initialState, action) {
   switch (action.type) {
+    case AppActionTypes.TODOS_LOADED:
+      return {...state, ui: { loading: false }};
+    case AppActionTypes.LOADING_TODOS:
+      return {...state, ui: { loading: true }};
     default:
       return state;
   }
