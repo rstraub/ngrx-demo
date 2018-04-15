@@ -13,6 +13,7 @@ import {filter} from 'rxjs/operators';
 export class HomeComponent implements OnInit {
   public todos: Todo[];
   public loading: boolean;
+  private readonly SNACKBAR_DURATION = 3000;
 
   constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private todoService: TodoService) {
   }
@@ -32,7 +33,16 @@ export class HomeComponent implements OnInit {
   public onDeleteClicked(id: number) {
     this.todoService.deleteTodo(id);
     this.snackBar.open(`Deleted todo`, null, {
-      duration: 3000
+      duration: this.SNACKBAR_DURATION
+    });
+    this.getTodos();
+  }
+
+  public onTodoUpdated(todo: Todo) {
+    this.todoService.updateTodo(todo);
+
+    this.snackBar.open(`Updated ${todo.description}`, null, {
+      duration: this.SNACKBAR_DURATION
     });
     this.getTodos();
   }
@@ -49,7 +59,7 @@ export class HomeComponent implements OnInit {
         this.todoService.addTodo(result);
         this.getTodos();
         this.snackBar.open(`Added ${result.description}`, null, {
-          duration: 3000
+          duration: this.SNACKBAR_DURATION
         });
       });
   }

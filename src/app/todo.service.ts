@@ -42,8 +42,13 @@ export class TodoService {
   }
 
   public deleteTodo(id: number): void {
-    const index = this.todos.findIndex(item => item.id === id);
+    const index = this.findTodo(id);
     this.todos.splice(index, 1);
+  }
+
+  public updateTodo(todo: Todo) {
+    const index = this.findTodo(todo.id);
+    this.todos.splice(index, 1, todo);
   }
 
   public addTodo(todo: Todo): Observable<number> {
@@ -52,5 +57,9 @@ export class TodoService {
     this.todos.push({...todo, completed: false, id});
     console.log('added: ', this.todos, id);
     return of(id);
+  }
+
+  private findTodo(id): number {
+    return this.todos.findIndex(item => item.id === id);
   }
 }

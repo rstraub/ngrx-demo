@@ -1,6 +1,6 @@
 <div class="todo-container">
   <div class="todo-checkbox">
-    <mat-checkbox [checked]="todo.completed" [(ngModel)]="todo.completed"></mat-checkbox>
+    <mat-checkbox [checked]="todo.completed" (change)="onCheckToggled($event)"></mat-checkbox>
   </div>
   <mat-expansion-panel class="todo-item">
     <mat-expansion-panel-header>

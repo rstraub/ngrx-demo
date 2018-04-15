@@ -17,4 +17,5 @@ export class TodoListComponent {
   }
 
   @Output() public deleteClicked = new EventEmitter<number>();
+  @Output() public todoUpdated = new EventEmitter<Todo>();
 }

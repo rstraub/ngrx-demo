@@ -13,6 +13,7 @@ import {MAT_CHECKBOX_CLICK_ACTION} from '@angular/material';
 export class TodoComponent implements OnInit {
   @Input() public todo: Todo;
   @Output() public deleteClicked = new EventEmitter<number>();
+  @Output() public todoUpdated = new EventEmitter<Todo>();
 
   constructor() {
   }
@@ -20,7 +21,8 @@ export class TodoComponent implements OnInit {
   ngOnInit() {
   }
 
-  toggleCompleted() {
-    this.todo.completed = !this.todo.completed;
+  onCheckToggled(change) {
+    const checked = change.checked;
+    this.todoUpdated.emit({...this.todo, completed: checked});
   }
 }

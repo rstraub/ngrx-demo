@@ -1,10 +1,18 @@
-<div class="todo-list-item" *ngFor="let todo of open">
-  <app-todo [todo]="todo" (deleteClicked)="deleteClicked.emit($event)"></app-todo>
+<div *ngIf="open.length">
+  <h2>Open todo's</h2>
+  <mat-divider class="divider"></mat-divider>
+  <div class="todo-list-item" *ngFor="let todo of open">
+    <app-todo [todo]="todo"
+              (deleteClicked)="deleteClicked.emit($event)"
+              (todoUpdated)="todoUpdated.emit($event)"></app-todo>
+  </div>
 </div>
 <div *ngIf="completed.length">
   <h2>Completed</h2>
   <mat-divider class="divider"></mat-divider>
   <div class="todo-list-item" *ngFor="let todo of completed">
-    <app-todo [todo]="todo" (deleteClicked)="deleteClicked.emit($event)"></app-todo>
+    <app-todo [todo]="todo"
+              (deleteClicked)="deleteClicked.emit($event)"
+              (todoUpdated)="todoUpdated.emit($event)"></app-todo>
   </div>
 </div>
