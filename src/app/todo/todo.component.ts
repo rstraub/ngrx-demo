@@ -14,6 +14,7 @@ export class TodoComponent implements OnInit {
   @Input() public todo: Todo;
   @Output() public deleteClicked = new EventEmitter<number>();
   @Output() public todoUpdated = new EventEmitter<Todo>();
+  @Output() public updateClicked = new EventEmitter<Todo>();
 
   constructor() {
   }
@@ -24,5 +25,12 @@ export class TodoComponent implements OnInit {
   onCheckToggled(change) {
     const checked = change.checked;
     this.todoUpdated.emit({...this.todo, completed: checked});
+  }
+
+  onDeleteClicked(id: number) {
+    const confirmed = window.confirm('Are you sure you want to delete this todo?');
+    if (confirmed) {
+      this.deleteClicked.emit(id);
+    }
   }
 }

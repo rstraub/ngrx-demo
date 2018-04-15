@@ -55,7 +55,6 @@ export class TodoService {
     let id = this.todos[this.todos.length - 1].id;
     id++;
     this.todos.push({...todo, completed: false, id});
-    console.log('added: ', this.todos, id);
     return of(id);
   }
 

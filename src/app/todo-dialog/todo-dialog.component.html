@@ -1,15 +1,18 @@
-<h1 mat-dialog-title>New Todo</h1>
+<h1 mat-dialog-title *ngIf="!data.isUpdate; else updateHeader">New Todo</h1>
+<ng-template #updateHeader>
+  <h1 mat-dialog-title>Update Todo</h1>
+</ng-template>
 <div mat-dialog-content>
   <mat-form-field class="form-control">
-    <input matInput placeholder="Description" [(ngModel)]="data.description">
+    <input matInput placeholder="Description" [(ngModel)]="data.todo.description">
   </mat-form-field>
-  <mat-select placeholder="Priority" class="form-control" [(ngModel)]="data.priority">
+  <mat-select placeholder="Priority" class="form-control" [(ngModel)]="data.todo.priority">
     <mat-option *ngFor="let priority of priorities" [value]="priority.value">
       {{ priority.viewValue }}
     </mat-option>
   </mat-select>
   <mat-form-field class="form-control">
-    <textarea matInput placeholder="Notes" [(ngModel)]="data.note"></textarea>
+    <textarea matInput placeholder="Notes" [(ngModel)]="data.todo.note"></textarea>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>

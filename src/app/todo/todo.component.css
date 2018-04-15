@@ -31,3 +31,7 @@
 .priority.low {
   color: green;
 }
+
+.action-button {
+  margin: 0 0.5rem;
+}

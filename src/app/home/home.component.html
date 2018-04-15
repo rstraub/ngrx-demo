@@ -6,7 +6,9 @@
 </div>
 <app-todo-list *ngIf="!loading; else loader" [todos]="todos"
                (deleteClicked)="onDeleteClicked($event)"
-               (todoUpdated)="onTodoUpdated($event)"></app-todo-list>
+               (todoUpdated)="onTodoUpdated($event)"
+               (updateClicked)="updateTodoDialog($event)">
+</app-todo-list>
 <ng-template #loader>
   <div class="loader-container">
     <mat-spinner class="loader"></mat-spinner>

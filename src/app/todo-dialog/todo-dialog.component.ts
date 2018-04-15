@@ -15,7 +15,9 @@ export class TodoDialogComponent {
     {value: TodoPriority.LOW, viewValue: 'Low'}
   ];
 
-  constructor(public dialogRef: MatDialogRef<TodoDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: Todo) { }
+  constructor(public dialogRef: MatDialogRef<TodoDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: { isUpdate: boolean, todo: Todo }) {
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

@@ -10,12 +10,18 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-
-    <h3>Notes:</h3>
-    <p>{{ todo.note }}</p>
+    <div *ngIf="todo.note">
+      <h3>Notes:</h3>
+      <p>{{ todo.note }}</p>
+    </div>
 
     <mat-action-row>
-      <button (click)="deleteClicked.emit(todo.id)" mat-raised-button color="warn"><mat-icon>delete forever</mat-icon>&nbsp;Delete</button>
+      <button class="action-button" (click)="updateClicked.emit(todo)" mat-raised-button>
+        <mat-icon>edit</mat-icon>&nbsp;Edit
+      </button>
+      <button class="action-button" (click)="onDeleteClicked(todo.id)" mat-raised-button color="warn">
+        <mat-icon>delete forever</mat-icon>&nbsp;Delete
+      </button>
     </mat-action-row>
   </mat-expansion-panel>
 </div>

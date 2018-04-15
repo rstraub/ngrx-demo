@@ -3,7 +3,7 @@ import {Todo} from '../models/todo';
 import {TodoService} from '../todo.service';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {TodoDialogComponent} from '../todo-dialog/todo-dialog.component';
-import {filter} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   public todos: Todo[];
   public loading: boolean;
   private readonly SNACKBAR_DURATION = 3000;
+  private readonly DIALOG_SIZE = '500px';
 
   constructor(private snackBar: MatSnackBar, private dialog: MatDialog, private todoService: TodoService) {
   }
@@ -47,18 +48,36 @@ export class HomeComponent implements OnInit {
     this.getTodos();
   }
 
-  openTodoDialog(): void {
-    const dialogRef = this.dialog.open(TodoDialogComponent, {
-      width: '500px',
-      data: {}
-    });
+  public openTodoDialog(): void {
+    this.handleDialog({
+      width: this.DIALOG_SIZE,
+      data: {isUpdate: false, todo: {}}
+    }, 'Added', false);
+  }
+
+  public updateTodoDialog(todo: Todo) {
+    this.handleDialog({
+      width: this.DIALOG_SIZE,
+      data: {isUpdate: true, todo: {...todo}}
+    }, 'Updated', true);
+  }
+
+  private handleDialog(config, message, isUpdate) {
+    const dialogRef = this.dialog.open(TodoDialogComponent, config);
 
     dialogRef.afterClosed()
-      .pipe(filter(result => !!result))
-      .subscribe(result => {
-        this.todoService.addTodo(result);
+      .pipe(
+        filter(result => result && result.todo),
+        map(result => result.todo)
+      )
+      .subscribe(todo => {
+        if (isUpdate) {
+          this.todoService.updateTodo(todo);
+        } else {
+          this.todoService.addTodo(todo);
+        }
         this.getTodos();
-        this.snackBar.open(`Added ${result.description}`, null, {
+        this.snackBar.open(`${message} ${todo.description}`, null, {
           duration: this.SNACKBAR_DURATION
         });
       });
