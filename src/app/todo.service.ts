@@ -5,6 +5,9 @@ import {of} from 'rxjs/observable/of';
 import {TodoPriority} from './models/todo-priority';
 import {delay} from 'rxjs/operators';
 
+/**
+ * This service is a mock for an external server.
+ */
 @Injectable()
 export class TodoService {
 
@@ -12,16 +15,19 @@ export class TodoService {
   }
 
   private todos = [{
+    id: 1,
     completed: false,
     note: 'Sparkly...',
     description: 'Clean the kitchen',
     priority: TodoPriority.HIGH
   }, {
+    id: 2,
     completed: false,
     note: 'Food',
     description: 'Get groceries',
     priority: TodoPriority.MEDIUM
   }, {
+    id: 3,
     completed: true,
     note: 'Really...',
     description: 'Take out the trash',
@@ -35,7 +41,16 @@ export class TodoService {
       );
   }
 
-  public addTodo(todo: Todo) {
-    this.todos.push(todo);
+  public deleteTodo(id: number): void {
+    const index = this.todos.findIndex(item => item.id === id);
+    this.todos.splice(index, 1);
+  }
+
+  public addTodo(todo: Todo): Observable<number> {
+    let id = this.todos[this.todos.length - 1].id;
+    id++;
+    this.todos.push({...todo, completed: false, id});
+    console.log('added: ', this.todos, id);
+    return of(id);
   }
 }

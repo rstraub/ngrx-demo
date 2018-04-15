@@ -29,6 +29,14 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  public onDeleteClicked(id: number) {
+    this.todoService.deleteTodo(id);
+    this.snackBar.open(`Deleted todo`, null, {
+      duration: 3000
+    });
+    this.getTodos();
+  }
+
   openTodoDialog(): void {
     const dialogRef = this.dialog.open(TodoDialogComponent, {
       width: '500px',
@@ -40,7 +48,7 @@ export class HomeComponent implements OnInit {
       .subscribe(result => {
         this.todoService.addTodo(result);
         this.getTodos();
-        this.snackBar.open(`Added ${result.description}`, 'Undo', {
+        this.snackBar.open(`Added ${result.description}`, null, {
           duration: 3000
         });
       });

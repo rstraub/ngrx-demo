@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Todo} from '../models/todo';
 import {MAT_CHECKBOX_CLICK_ACTION} from '@angular/material';
 
@@ -12,6 +12,7 @@ import {MAT_CHECKBOX_CLICK_ACTION} from '@angular/material';
 })
 export class TodoComponent implements OnInit {
   @Input() public todo: Todo;
+  @Output() public deleteClicked = new EventEmitter<number>();
 
   constructor() {
   }
