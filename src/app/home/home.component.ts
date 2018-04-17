@@ -5,9 +5,9 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 import {TodoDialogComponent} from '../todo-dialog/todo-dialog.component';
 import {filter, map} from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
-import { AppState, selectLoading } from '../app.reducer';
+import { AppState, selectLoading, selectDialog } from '../app.reducer';
 import { Observable } from 'rxjs/Observable';
-import { LoadingTodos, TodosLoaded } from '../app.actions';
+import { LoadingTodos, TodosLoaded, OpenedTodoDialog } from '../app.actions';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.loading$ = this.store.pipe(select(selectLoading));
     this.getTodos();
+    this.handleDialog();
   }
 
   private getTodos() {
@@ -54,32 +55,41 @@ export class HomeComponent implements OnInit {
   }
 
   public openTodoDialog(): void {
-    this.handleDialog({
+    this.store.dispatch(new OpenedTodoDialog({
       width: this.DIALOG_SIZE,
       data: {isUpdate: false, todo: {}}
-    }, 'Added', false);
+    }));
   }
 
   public updateTodoDialog(todo: Todo) {
-    this.handleDialog({
+    this.store.dispatch(new OpenedTodoDialog({
       width: this.DIALOG_SIZE,
       data: {isUpdate: true, todo: {...todo}}
-    }, 'Updated', true);
+    }));
   }
 
-  private handleDialog(config, message, isUpdate) {
-    const dialogRef = this.dialog.open(TodoDialogComponent, config);
+  private handleDialog() {
+    let dialogRef;
+
+    this.store.pipe(
+      select(selectDialog)
+    ).subscribe(dialog => {
+      dialogRef = this.dialog.open(TodoDialogComponent, dialog.todoDialog);
+    });
 
     dialogRef.afterClosed()
       .pipe(
         filter(result => result && result.todo),
-        map(result => result.todo)
       )
-      .subscribe(todo => {
-        if (isUpdate) {
+      .subscribe(result => {
+        const todo = result.todo;
+        let message;
+        if (result.isUpdate) {
+          message = 'Updated';
           this.todoService.updateTodo(todo)
             .subscribe(() => this.getTodos());
         } else {
+          message = 'Added';
           this.todoService.addTodo(todo)
             .subscribe(() => this.getTodos());
         }
