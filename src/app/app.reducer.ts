@@ -82,6 +82,7 @@ export function appReducer(state = initialState, action) {
       };
     case AppActionTypes.GET_TODOS:
     case AppActionTypes.ADD_TODO:
+    case AppActionTypes.DELETE_TODO:
     case AppActionTypes.UPDATE_TODO:
       return {
         ...state, ui: {

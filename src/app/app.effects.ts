@@ -4,7 +4,7 @@ import {TodoService} from './todo.service';
 import {Observable} from 'rxjs/Observable';
 import {map, mergeMap} from 'rxjs/operators';
 import {Action} from '@ngrx/store';
-import {AddTodo, AppActionTypes, GetTodos, TodosLoaded, UpdateTodo} from './app.actions';
+import {AddTodo, AppActionTypes, DeleteTodo, GetTodos, TodosLoaded, UpdateTodo} from './app.actions';
 
 
 @Injectable()
@@ -16,6 +16,19 @@ export class AppEffects {
     ofType<GetTodos>(AppActionTypes.GET_TODOS),
     mergeMap(() =>
       this.todoService.getTodos().pipe(
+        // If successful, dispatch success action with result
+        map(todos => new TodosLoaded(todos)),
+        // If request fails, dispatch failed action
+        // catchError(() => console.error('handle the error here'))
+      )
+    )
+  );
+
+  @Effect()
+  deleteTodo$: Observable<Action> = this.actions$.pipe(
+    ofType<DeleteTodo>(AppActionTypes.DELETE_TODO),
+    mergeMap(action =>
+      this.todoService.deleteTodo(action.payload).pipe(
         // If successful, dispatch success action with result
         map(todos => new TodosLoaded(todos)),
         // If request fails, dispatch failed action

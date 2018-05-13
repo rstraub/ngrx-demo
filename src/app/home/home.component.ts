@@ -6,7 +6,7 @@ import {TodoDialogComponent} from '../todo-dialog/todo-dialog.component';
 import {select, Store} from '@ngrx/store';
 import {AppState, selectDialog, selectLoading, selectSnackBar, selectTodos} from '../app.reducer';
 import {Observable} from 'rxjs/Observable';
-import {AddTodo, CloseSnackBar, GetTodos, OpenedTodoDialog, OpenSnackBar, UpdateTodo} from '../app.actions';
+import {AddTodo, CloseSnackBar, DeleteTodo, GetTodos, OpenedTodoDialog, OpenSnackBar, UpdateTodo} from '../app.actions';
 
 @Component({
   selector: 'app-home',
@@ -35,9 +35,8 @@ export class HomeComponent implements OnInit {
   }
 
   public onDeleteClicked(id: number) {
-    this.todoService.deleteTodo(id); // TODO: Model using effect
+    this.store.dispatch(new DeleteTodo(id));
     this.store.dispatch(new OpenSnackBar(`Deleted todo`));
-    this.getTodos(); // TODO: remove this
   }
 
   public openTodoDialog(): void {

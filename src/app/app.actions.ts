@@ -8,6 +8,7 @@ export enum AppActionTypes {
   CLOSE_SNACKBAR = '[UI] Close Snackbar',
   TODOS_LOADED = '[DATA] Loaded Todos',
   GET_TODOS = '[DATA] Get Todos',
+  DELETE_TODO = '[DATA] Delete Todos',
   UPDATE_TODO = '[DATA] Update Todo',
   ADD_TODO = '[DATA] Add Todo'
 }
@@ -30,6 +31,11 @@ export class ClosedTodoDialog implements Action {
 export class AddTodo implements Action {
   type: string = AppActionTypes.ADD_TODO;
   constructor(public payload: Todo) {}
+}
+
+export class DeleteTodo implements Action {
+  type: string = AppActionTypes.DELETE_TODO;
+  constructor(public payload: number) {}
 }
 
 export class UpdateTodo implements Action {
@@ -57,5 +63,6 @@ export type AppActions =
   | CloseSnackBar
   | OpenSnackBar
   | GetTodos
+  | DeleteTodo
   | AddTodo
   | UpdateTodo;
