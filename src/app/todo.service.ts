@@ -41,22 +41,23 @@ export class TodoService {
       );
   }
 
-  public deleteTodo(id: number): void {
+  public deleteTodo(id: number): Observable<Todo[]> {
     const index = this.findTodo(id);
     this.todos.splice(index, 1);
+    return this.getTodos();
   }
 
-  public updateTodo(todo: Todo): Observable<number> {
+  public updateTodo(todo: Todo): Observable<Todo[]> {
     const index = this.findTodo(todo.id);
     this.todos.splice(index, 1, todo);
-    return of(todo.id);
+    return this.getTodos();
   }
 
-  public addTodo(todo: Todo): Observable<number> {
+  public addTodo(todo: Todo): Observable<Todo[]> {
     let id = this.todos[this.todos.length - 1].id;
     id++;
     this.todos.push({...todo, completed: false, id});
-    return of(id);
+    return this.getTodos();
   }
 
   private findTodo(id): number {
