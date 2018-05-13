@@ -2,8 +2,10 @@ import { Action } from '@ngrx/store';
 import {Todo} from './models/todo';
 
 export enum AppActionTypes {
-  OPENED_TODO_DIALOG = '[UI] Opened Todo Dialog',
-  CLOSED_TODO_DIALOG = '[UI] Closed Todo Dialog',
+  OPEN_TODO_DIALOG = '[UI] Open Todo Dialog',
+  CLOSE_TODO_DIALOG = '[UI] Close Todo Dialog',
+  OPEN_SNACKBAR = '[UI] Open Snackbar',
+  CLOSE_SNACKBAR = '[UI] Close Snackbar',
   TODOS_LOADED = '[DATA] Loaded Todos',
   GET_TODOS = '[DATA] Get Todos',
   UPDATE_TODO = '[DATA] Update Todo',
@@ -16,12 +18,12 @@ export class TodosLoaded implements Action {
 }
 
 export class OpenedTodoDialog implements Action {
-  type: string = AppActionTypes.OPENED_TODO_DIALOG;
+  type: string = AppActionTypes.OPEN_TODO_DIALOG;
   constructor(public payload: any) {}
 }
 
 export class ClosedTodoDialog implements Action {
-  type: string = AppActionTypes.CLOSED_TODO_DIALOG;
+  type: string = AppActionTypes.CLOSE_TODO_DIALOG;
   constructor(public payload?: any) {}
 }
 
@@ -39,10 +41,21 @@ export class GetTodos implements Action {
   type: string = AppActionTypes.GET_TODOS;
 }
 
+export class OpenSnackBar implements Action {
+  type: string = AppActionTypes.OPEN_SNACKBAR;
+  constructor(public payload: string) {}
+}
+
+export class CloseSnackBar implements Action {
+  type: string = AppActionTypes.CLOSE_SNACKBAR;
+}
+
 export type AppActions =
   | TodosLoaded
   | OpenedTodoDialog
   | ClosedTodoDialog
+  | CloseSnackBar
+  | OpenSnackBar
   | GetTodos
   | AddTodo
   | UpdateTodo;

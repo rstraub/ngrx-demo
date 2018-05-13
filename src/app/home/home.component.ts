@@ -4,9 +4,9 @@ import {TodoService} from '../todo.service';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {TodoDialogComponent} from '../todo-dialog/todo-dialog.component';
 import {select, Store} from '@ngrx/store';
-import {AppState, selectDialog, selectLoading, selectTodos} from '../app.reducer';
+import {AppState, selectDialog, selectLoading, selectSnackBar, selectTodos} from '../app.reducer';
 import {Observable} from 'rxjs/Observable';
-import {AddTodo, GetTodos, OpenedTodoDialog, UpdateTodo} from '../app.actions';
+import {AddTodo, CloseSnackBar, GetTodos, OpenedTodoDialog, OpenSnackBar, UpdateTodo} from '../app.actions';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
     this.loading$ = this.store.pipe(select(selectLoading));
     this.getTodos();
     this.handleDialog();
+    this.handleSnackbar();
   }
 
   private getTodos() {
@@ -34,11 +35,9 @@ export class HomeComponent implements OnInit {
   }
 
   public onDeleteClicked(id: number) {
-    this.todoService.deleteTodo(id);
-    this.snackBar.open(`Deleted todo`, null, {
-      duration: this.SNACKBAR_DURATION
-    });
-    this.getTodos();
+    this.todoService.deleteTodo(id); // TODO: Model using effect
+    this.store.dispatch(new OpenSnackBar(`Deleted todo`));
+    this.getTodos(); // TODO: remove this
   }
 
   public openTodoDialog(): void {
@@ -82,8 +81,19 @@ export class HomeComponent implements OnInit {
       message = 'Added';
       this.store.dispatch(new AddTodo(todo));
     }
-    this.snackBar.open(`${message} ${todo.description}`, null, {
-      duration: this.SNACKBAR_DURATION
-    });
+    this.store.dispatch(new OpenSnackBar(`${message} ${todo.description}`));
+  }
+
+  private handleSnackbar() {
+    this.store
+      .pipe(select(selectSnackBar))
+      .subscribe(snackBar => {
+        if (snackBar.isOpen) {
+          this.snackBar.open(snackBar.message);
+          setTimeout(() => this.store.dispatch(new CloseSnackBar()), this.SNACKBAR_DURATION);
+        } else {
+          this.snackBar.dismiss();
+        }
+      });
   }
 }

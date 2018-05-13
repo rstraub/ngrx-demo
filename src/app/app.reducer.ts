@@ -1,6 +1,7 @@
 import {createSelector} from '@ngrx/store';
 import {AppActionTypes} from './app.actions';
 import {Todo} from './models/todo';
+import {s} from '@angular/core/src/render3';
 
 export interface AppState {
   ui: {
@@ -8,6 +9,10 @@ export interface AppState {
     dialog: {
       todoDialogOpen: boolean
       todoDialog: object
+    },
+    snackBar: {
+      isOpen: boolean
+      message: string
     }
   };
   todos: Todo[];
@@ -19,6 +24,10 @@ const initialState: AppState = {
     dialog: {
       todoDialogOpen: false,
       todoDialog: null
+    },
+    snackBar: {
+      isOpen: false,
+      message: null
     }
   },
   todos: null
@@ -32,7 +41,7 @@ export function appReducer(state = initialState, action) {
         ui: {...state.ui, loading: false},
         todos: action.payload
       };
-    case AppActionTypes.OPENED_TODO_DIALOG:
+    case AppActionTypes.OPEN_TODO_DIALOG:
       return {
         ...state, ui: {
           ...state.ui, dialog: {
@@ -40,12 +49,34 @@ export function appReducer(state = initialState, action) {
           }
         }
       };
-    case AppActionTypes.CLOSED_TODO_DIALOG:
+    case AppActionTypes.CLOSE_TODO_DIALOG:
       const todoDialog = action.payload ? {data: action.payload} : null;
       return {
         ...state, ui: {
           ...state.ui, dialog: {
             todoDialogOpen: false, todoDialog
+          }
+        }
+      };
+    case AppActionTypes.OPEN_SNACKBAR:
+      return {
+        ...state,
+        ui: {
+          ...state.ui,
+          snackBar: {
+            isOpen: true,
+            message: action.payload
+          }
+        }
+      };
+    case AppActionTypes.CLOSE_SNACKBAR:
+      return {
+        ...state,
+        ui: {
+          ...state.ui,
+          snackBar: {
+            isOpen: false,
+            message: null
           }
         }
       };
@@ -62,7 +93,11 @@ export function appReducer(state = initialState, action) {
   }
 }
 
-export const selectUI = state => state.app.ui;
+const selectRoot = state => state.app;
+export const selectUI = createSelector(
+  selectRoot,
+  state => state.ui
+);
 export const selectLoading = createSelector(
   selectUI,
   state => state.loading
@@ -71,4 +106,11 @@ export const selectDialog = createSelector(
   selectUI,
   state => state.dialog
 );
-export const selectTodos = state => state.app.todos;
+export const selectSnackBar = createSelector(
+  selectUI,
+  state => state.snackBar
+);
+export const selectTodos = createSelector(
+  selectRoot,
+  state => state.todos
+);

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {TodoService} from './todo.service';
 import {Observable} from 'rxjs/Observable';
-import {catchError, map, mergeMap} from 'rxjs/operators';
+import {map, mergeMap} from 'rxjs/operators';
 import {Action} from '@ngrx/store';
 import {AddTodo, AppActionTypes, GetTodos, TodosLoaded, UpdateTodo} from './app.actions';
 
