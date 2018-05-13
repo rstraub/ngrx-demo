@@ -60,18 +60,19 @@ Next up we are going to create effects to model our side effects. In this case l
 
 1. Model the todos in our state.
 1. Write a selector for the todos and use it in the home component to retrieve the todos.
-1. Make the todos property in the home component an observable array of todos and use the async pipe in the template to resolve the todos asynchronously
+1. Make the todos property in the home component an observable array of todos and use the async pipe in the template to resolve the todos asynchronously.
 1. Add the schematics dependency `npm install github:ngrx/schematics-builds --save-dev`
 1. Add the schematics info to our `angular-cli.json` file. Add a new key for `cli` and in that object add `"defaultCollection": "@ngrx/schematics"`. We can now use schematics to generate ngrx files.
 1. Use the cli to generate our effects root module: `ng generate effect App --root --module app.module.ts --collection @ngrx/schematics`. It generates the effects file and required setup.
-1. Add three new actions to our app actions called GetTodos, AddTodo and UpdateTodo.
+1. Add four new actions to our app actions called GetTodos, AddTodo, DeleteTodo and UpdateTodo.
 1. Model getting the todos with an [effect](https://github.com/ngrx/platform/blob/master/docs/effects/README.md#example).
 1. In the home component dispatch the GetTodos action instead of subscribing to the todo service in the `getTodos` method.
-1. Remove the calls to the todo service for updating and adding todos from the home component.
-1. Handle the update and add actions in our new [effect](https://github.com/ngrx/platform/blob/master/docs/effects/README.md#example).
-1. The loading action we wrote in the first assignment can now be removed. The loading state should now be set to true in the reducer for the GetTodos, AddTodo and UpdateTodo actions.
+1. Remove the calls to the todo service for updating, deleting and adding todos from the home component.
+1. Dispatch the update, delete and add actions from the home component.
+1. Handle the update, delete and add actions in our new [effect](https://github.com/ngrx/platform/blob/master/docs/effects/README.md#example).
+1. The loading action we wrote in the first assignment can now be removed. The loading state should now be set to true in the reducer for the GetTodos, AddTodo, DeleteTodo and UpdateTodo actions.
 
-## A bit more practice (Todo dialog)
+## Todo dialog
 
 Lets model the next interaction in our application. Opening and closing the todo dialog. We use the dialog to both create new todos and to edit existing todos. This another good example of UI state.
 
@@ -84,10 +85,17 @@ Lets model the next interaction in our application. Opening and closing the todo
 1. Also setup a listener for when the dialog should close.
 1. Dispatch the close action when the buttons in the dialog are clicked. If the submit button is clicked also pass the dialog data as a payload for the action.
 
+## Snackbar
+
+1. Create actions for opening and closing the snackbar.
+1. Model the state for the snackbar in the app reducer.
+1. Implement the mutations for the state in the app reducer.
+1. Dispatch the `OpenSnackBar` action instead of manually opening and closing it in the home component.
+1. Subscribe to the snackbar state and implement handlers for opening and closing the snackbar. Tip: use a setTimeout to dispatch `CloseSnackBar` after a certain period.
+
 ## Bonus stuff for really fast people (no solutions for these)
 
 1. Split up the reducers and make the app more maintainable by splitting it up in features.
-1. Also model the snackbar with ngrx.
 1. Use the `@ngrx/entities` package to model our todos as entities, simplifying and speeding up entity lookups
 1. Model clicking the todos and expanding and closing them
 1. Add login to the app, this page should be shown before we can see the home screen. After logging in in the app we should be able to see the home component. Model everything using ngrx and use the `@ngrx/router-store` package to model router events as actions. A good example of this would be the router guard which you should make for the home component.

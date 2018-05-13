@@ -14,7 +14,7 @@ export class TodoService {
   constructor() {
   }
 
-  private todos = [{
+  private todos: Todo[] = [{
     id: 1,
     completed: false,
     note: 'Sparkly...',
