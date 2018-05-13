@@ -27,6 +27,8 @@ import {NavbarComponent} from './navbar/navbar.component';
 import {FormsModule} from '@angular/forms';
 import { TodoDialogComponent } from './todo-dialog/todo-dialog.component';
 import { appReducer } from './app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './app.effects';
 
 
 @NgModule({
@@ -58,7 +60,8 @@ import { appReducer } from './app.reducer';
     MatInputModule,
     MatSnackBarModule,
     MatSelectModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    EffectsModule.forRoot([AppEffects])
   ],
   entryComponents: [TodoDialogComponent],
   providers: [TodoService],

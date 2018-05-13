@@ -1,18 +1,18 @@
 import { Action } from '@ngrx/store';
+import {Todo} from './models/todo';
 
 export enum AppActionTypes {
-  TODOS_LOADED = '[DATA] Loaded Todos',
-  LOADING_TODOS = '[DATA] Loading Todos',
   OPENED_TODO_DIALOG = '[UI] Opened Todo Dialog',
   CLOSED_TODO_DIALOG = '[UI] Closed Todo Dialog',
+  TODOS_LOADED = '[DATA] Loaded Todos',
+  GET_TODOS = '[DATA] Get Todos',
+  UPDATE_TODO = '[DATA] Update Todo',
+  ADD_TODO = '[DATA] Add Todo'
 }
 
 export class TodosLoaded implements Action {
   type: string = AppActionTypes.TODOS_LOADED;
-}
-
-export class LoadingTodos implements Action {
-  type: string = AppActionTypes.LOADING_TODOS;
+  constructor(public payload: Todo[]) {}
 }
 
 export class OpenedTodoDialog implements Action {
@@ -25,8 +25,24 @@ export class ClosedTodoDialog implements Action {
   constructor(public payload?: any) {}
 }
 
+export class AddTodo implements Action {
+  type: string = AppActionTypes.ADD_TODO;
+  constructor(public payload: Todo) {}
+}
+
+export class UpdateTodo implements Action {
+  type: string = AppActionTypes.UPDATE_TODO;
+  constructor(public payload: Todo) {}
+}
+
+export class GetTodos implements Action {
+  type: string = AppActionTypes.GET_TODOS;
+}
+
 export type AppActions =
   | TodosLoaded
   | OpenedTodoDialog
   | ClosedTodoDialog
-  | LoadingTodos;
+  | GetTodos
+  | AddTodo
+  | UpdateTodo;

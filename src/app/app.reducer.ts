@@ -1,5 +1,6 @@
-import { createSelector } from '@ngrx/store';
-import { AppActionTypes } from './app.actions';
+import {createSelector} from '@ngrx/store';
+import {AppActionTypes} from './app.actions';
+import {Todo} from './models/todo';
 
 export interface AppState {
   ui: {
@@ -9,6 +10,7 @@ export interface AppState {
       todoDialog: object
     }
   };
+  todos: Todo[];
 }
 
 const initialState: AppState = {
@@ -18,26 +20,43 @@ const initialState: AppState = {
       todoDialogOpen: false,
       todoDialog: null
     }
-  }
+  },
+  todos: null
 };
 
 export function appReducer(state = initialState, action) {
   switch (action.type) {
     case AppActionTypes.TODOS_LOADED:
-      return {...state, ui: { ...state.ui, loading: false }};
-    case AppActionTypes.LOADING_TODOS:
-      return {...state, ui: { ...state.ui, loading: true }};
+      return {
+        ...state,
+        ui: {...state.ui, loading: false},
+        todos: action.payload
+      };
     case AppActionTypes.OPENED_TODO_DIALOG:
-      return {...state, ui: { ...state.ui, dialog: {
-          todoDialogOpen: true, todoDialog: action.payload }
+      return {
+        ...state, ui: {
+          ...state.ui, dialog: {
+            todoDialogOpen: true, todoDialog: action.payload
+          }
         }
       };
     case AppActionTypes.CLOSED_TODO_DIALOG:
-      const todoDialog = action.payload ? { data: action.payload } : null;
-      return {...state, ui: { ...state.ui, dialog: {
-        todoDialogOpen: false, todoDialog
-      }}
-    };
+      const todoDialog = action.payload ? {data: action.payload} : null;
+      return {
+        ...state, ui: {
+          ...state.ui, dialog: {
+            todoDialogOpen: false, todoDialog
+          }
+        }
+      };
+    case AppActionTypes.GET_TODOS:
+    case AppActionTypes.ADD_TODO:
+    case AppActionTypes.UPDATE_TODO:
+      return {
+        ...state, ui: {
+          ...state.ui, loading: true
+        }
+      };
     default:
       return state;
   }
@@ -52,3 +71,4 @@ export const selectDialog = createSelector(
   selectUI,
   state => state.dialog
 );
+export const selectTodos = state => state.app.todos;
