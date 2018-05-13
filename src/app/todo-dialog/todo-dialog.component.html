@@ -3,7 +3,7 @@
   <h1 mat-dialog-title>Update Todo</h1>
 </ng-template>
 <div mat-dialog-content>
-  <form #todoForm="ngForm">
+  <form #todoForm="ngForm" (submit)="submit()">
     <mat-form-field class="form-control">
       <input matInput placeholder="Description" [(ngModel)]="data.todo.description" name="description" required>
     </mat-form-field>
@@ -20,5 +20,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button color="primary" [disabled]="todoForm.invalid" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  <button mat-button type="submit" (click)="submit()" color="primary" [disabled]="todoForm.invalid" cdkFocusInitial>Ok</button>
 </div>

@@ -21,7 +21,8 @@ export class OpenedTodoDialog implements Action {
 }
 
 export class ClosedTodoDialog implements Action {
-  type: string = AppActionTypes.OPENED_TODO_DIALOG;
+  type: string = AppActionTypes.CLOSED_TODO_DIALOG;
+  constructor(public payload?: any) {}
 }
 
 export type AppActions =

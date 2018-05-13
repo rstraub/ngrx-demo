@@ -3,11 +3,10 @@ import {Todo} from '../models/todo';
 import {TodoService} from '../todo.service';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {TodoDialogComponent} from '../todo-dialog/todo-dialog.component';
-import {filter, map} from 'rxjs/operators';
-import { Store, select } from '@ngrx/store';
-import { AppState, selectLoading, selectDialog } from '../app.reducer';
-import { Observable } from 'rxjs/Observable';
-import { LoadingTodos, TodosLoaded, OpenedTodoDialog } from '../app.actions';
+import {select, Store} from '@ngrx/store';
+import {AppState, selectDialog, selectLoading} from '../app.reducer';
+import {Observable} from 'rxjs/Observable';
+import {LoadingTodos, OpenedTodoDialog, TodosLoaded} from '../app.actions';
 
 @Component({
   selector: 'app-home',
@@ -74,28 +73,31 @@ export class HomeComponent implements OnInit {
     this.store.pipe(
       select(selectDialog)
     ).subscribe(dialog => {
-      dialogRef = this.dialog.open(TodoDialogComponent, dialog.todoDialog);
-    });
-
-    dialogRef.afterClosed()
-      .pipe(
-        filter(result => result && result.todo),
-      )
-      .subscribe(result => {
-        const todo = result.todo;
-        let message;
-        if (result.isUpdate) {
-          message = 'Updated';
-          this.todoService.updateTodo(todo)
-            .subscribe(() => this.getTodos());
-        } else {
-          message = 'Added';
-          this.todoService.addTodo(todo)
-            .subscribe(() => this.getTodos());
+      if (dialog.todoDialogOpen) {
+        dialogRef = this.dialog.open(TodoDialogComponent, dialog.todoDialog);
+      } else if (dialogRef) {
+        dialogRef.close();
+        if (dialog.todoDialog) {
+          this.handleTodoEdit(dialog.todoDialog.data);
         }
-        this.snackBar.open(`${message} ${todo.description}`, null, {
-          duration: this.SNACKBAR_DURATION
-        });
-      });
+      }
+    });
+  }
+
+  private handleTodoEdit(dialogResult) {
+    const todo = dialogResult.todo;
+    let message;
+    if (dialogResult.isUpdate) {
+      message = 'Updated';
+      this.todoService.updateTodo(todo)
+        .subscribe(() => this.getTodos());
+    } else {
+      message = 'Added';
+      this.todoService.addTodo(todo)
+        .subscribe(() => this.getTodos());
+    }
+    this.snackBar.open(`${message} ${todo.description}`, null, {
+      duration: this.SNACKBAR_DURATION
+    });
   }
 }

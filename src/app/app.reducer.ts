@@ -33,8 +33,9 @@ export function appReducer(state = initialState, action) {
         }
       };
     case AppActionTypes.CLOSED_TODO_DIALOG:
+      const todoDialog = action.payload ? { data: action.payload } : null;
       return {...state, ui: { ...state.ui, dialog: {
-        todoDialogOpen: false, todoDialog: null
+        todoDialogOpen: false, todoDialog
       }}
     };
     default:
