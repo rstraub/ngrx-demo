@@ -39,6 +39,10 @@ export class HomeComponent implements OnInit {
     this.store.dispatch(new OpenSnackBar(`Deleted todo`));
   }
 
+  public onTodoUpdated(todo: Todo) {
+    this.store.dispatch(new UpdateTodo(todo));
+  }
+
   public openTodoDialog(): void {
     this.store.dispatch(new OpenedTodoDialog({
       width: this.DIALOG_SIZE,
