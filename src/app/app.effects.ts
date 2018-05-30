@@ -29,10 +29,7 @@ export class AppEffects {
     ofType<DeleteTodo>(AppActionTypes.DELETE_TODO),
     mergeMap(action =>
       this.todoService.deleteTodo(action.payload).pipe(
-        // If successful, dispatch success action with result
         map(todos => new TodosLoaded(todos)),
-        // If request fails, dispatch failed action
-        // catchError(() => console.error('handle the error here'))
       )
     )
   );
@@ -42,10 +39,7 @@ export class AppEffects {
     ofType<AddTodo>(AppActionTypes.ADD_TODO),
     mergeMap(action =>
       this.todoService.addTodo(action.payload).pipe(
-        // If successful, dispatch success action with result
         map(todos => new TodosLoaded(todos)),
-        // If request fails, dispatch failed action
-        // catchError(() => console.error('handle the error here'))
       )
     )
   );
@@ -55,10 +49,7 @@ export class AppEffects {
     ofType<UpdateTodo>(AppActionTypes.UPDATE_TODO),
     mergeMap(action =>
       this.todoService.updateTodo(action.payload).pipe(
-        // If successful, dispatch success action with result
         map(todos => new TodosLoaded(todos)),
-        // If request fails, dispatch failed action
-        // catchError(() => console.error('handle the error here'))
       )
     )
   );

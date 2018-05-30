@@ -1,12 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {Todo} from '../models/todo';
-import {TodoService} from '../todo.service';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {TodoDialogComponent} from '../todo-dialog/todo-dialog.component';
 import {select, Store} from '@ngrx/store';
-import {AppState, selectDialog, selectLoading, selectSnackBar, selectTodos} from '../app.reducer';
+import {selectTodos} from '../app.reducer';
 import {Observable} from 'rxjs/Observable';
-import {AddTodo, CloseSnackBar, DeleteTodo, GetTodos, OpenedTodoDialog, OpenSnackBar, UpdateTodo} from '../app.actions';
+import {AddTodo, DeleteTodo, GetTodos, UpdateTodo} from '../app.actions';
+import {selectDialog, selectLoading, selectSnackBar} from '../ui/ui.reducer';
+import {AppState} from '../app-state.model';
+import {CloseSnackBar, OpenedTodoDialog, OpenSnackBar} from '../ui/ui.actions';
 
 @Component({
   selector: 'app-home',

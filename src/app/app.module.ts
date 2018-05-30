@@ -1,9 +1,9 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
+import {StoreModule} from '@ngrx/store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from '../environments/environment';
 import {AppComponent} from './app.component';
 import {
   MatToolbarModule,
@@ -25,11 +25,11 @@ import {TodoListComponent} from './todo-list/todo-list.component';
 import {TodoComponent} from './todo/todo.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {FormsModule} from '@angular/forms';
-import { TodoDialogComponent } from './todo-dialog/todo-dialog.component';
-import { appReducer } from './app.reducer';
-import { EffectsModule } from '@ngrx/effects';
-import { AppEffects } from './app.effects';
-
+import {TodoDialogComponent} from './todo-dialog/todo-dialog.component';
+import {appReducer} from './app.reducer';
+import {EffectsModule} from '@ngrx/effects';
+import {AppEffects} from './app.effects';
+import {uiReducer} from './ui/ui.reducer';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,10 @@ import { AppEffects } from './app.effects';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    StoreModule.forRoot({ app: appReducer }),
+    StoreModule.forRoot({
+      todo: appReducer,
+      ui: uiReducer
+    }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states,
       logOnly: environment.production // Restrict extension to log-only mode
