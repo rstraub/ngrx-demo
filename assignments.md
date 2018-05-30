@@ -8,9 +8,14 @@ If you get stuck during the assignments you can always check out the solution br
 1. Add the devtools to the project. Install the chrome or firefox redux extension as well. See the [docs](https://github.com/ngrx/platform/blob/master/docs/store-devtools/README.md) to see how.
 1. Let's add the first "state" of our application. Let's start with a piece of UI state. Add a loading property to the app state. It will start out as "true" and when our todos are loaded we will set to false. The steps to do so are as follows:
     * Write a reducer function like `appReducer`. It should just have a default case for now.
-    * Add it to the `forRoot` declaration of the store. 
+    * Add it to the `forRoot` declaration of the store. Pay in mind this needs to be an object. Add your reducer by passing `forRoot` an object like:
+    ```javascript
+    StoreModule.forRoot({
+      app: appReducer
+    })
+    ```
     * Define an interface which describes the app state.
-    * Give the reducer function initial state with loading false.
+    * Give the reducer function initial state with loading set to true.
 
 If everything went correctly you should see something in the state in the redux tools.
 
@@ -18,20 +23,28 @@ If everything went correctly you should see something in the state in the redux 
 
 1. Now we have state in our application... We just don't use it yet. Let's change that. In the home component, let's use the store to toggle the loading indicator. To do so you need to do the following:
     * Inject the store in the home component
-    * Subscribe to the store and get the loading value
-    * Remove the loading interactions in the `getTodos` method
+    * Remove the code where loading is set to true or false in the `getTodos` method
+    * Subscribe to the store and get the loading value. Get the value by adding the `select` operator and accessing loading: 
+    ```javascript
+    store.pipe(
+      select('app.loading')
+    ).subscribe(loading =>
+      // Handle loading value here
+    )
+    ```
+    * Use the loading value you receive in the subscription to set the loading property on the home component.
 
 You should see the loading indicator running forever now.
 
 2. This is working, but we can improve. A first improvement we can make is to write a [selector](https://github.com/ngrx/platform/blob/master/docs/store/selectors.md).
     * Write a selector function which returns the `loading` state
-    * Use the selector in the home component to avoid traversing the state with dots. There is a special [operator](https://github.com/ngrx/platform/blob/master/docs/store/selectors.md#using-a-selector-with-the-store) called `select` which we can use observable.
+    * Use the selector in the home component to avoid traversing the state with dots (i.e. 'app.loading'). There is a special [operator](https://github.com/ngrx/platform/blob/master/docs/store/selectors.md#using-a-selector-with-the-store) called `select` which we saw before. Instead of using the string selector we can pass it our selector function.
 
 You should still see the same result except that we can now use a convenient function to access the loading state.
 
-3. We still have to manually subscribe to the loading state. Angular can help us out here. The second improvement is to use the [`async` pipe](https://angular.io/api/common/AsyncPipe) that angular offers in our template. This way angular can subscribe and unsubscribe for us.
-    * Remove the loading subscribe in the home component.
-    * Store the observable in a variable like `loading$`
+3. We still have to manually subscribe to the loading state. Angular can help us out here. The second improvement is to use the [`async` pipe](https://angular.io/api/common/AsyncPipe) that angular offers in our template. This way angular subscribes and unsubscribes for us.
+    * Remove the loading subscription in the home component.
+    * Store the observable in a variable like `loading$` (the `$` indicates an observable variable, this is convention).
     * In the `home.component.html` use the async pipe to get the loading variable asynchronously
 
 This should still work the same as before but now the boilerplate of subscribing and unsubscribing is mostly gone.
@@ -44,11 +57,11 @@ Our store is working, but now the only thing our application is doing is showing
 
 1. Create a new file which will hold our actions: `app.actions.ts`.
 1. In this file create a new enum which will describe our action types.
-1. Add the action type: TODOS_LOADED and LOADING_TODOS to the enum.
+1. Add the action type: `TODOS_LOADED` and `LOADING_TODOS` to the enum.
 1. Create new [action creators](https://github.com/ngrx/platform/blob/master/docs/store/actions.md#typed-actions) in the file, It should implement from the ngrx `Action` interface. Do this for both action types.
-1. Now switch to the app reducer and add a new case to the switch. Here we add the TODOS_LOADED and LOADING_TODOS cases.
-1. We can now mutate the state. In the TODOS_LOADED case create a new state object in which the loading property is false. Use either the spread operator or Object.assign to do so easily. **Never, ever mutate the state directly.**
-1. Write another case where we handle the LOADING_TODOS action.
+1. Now switch to the app reducer and add a new case to the switch. Here we add the `TODOS_LOADED` and `LOADING_TODOS` cases.
+1. We can now mutate the state. In the `TODOS_LOADED` case create a new state object in which the loading property is set to false. Use either the spread operator or Object.assign to do so easily. **Never, ever mutate the state directly.**
+1. Write another case where we handle the `LOADING_TODOS` action. Of course here the loading property should be set to true.
 1. In the home component dispatch the loading todos action before making the getTodos request to the service.
 1. When the response has been returned dispatch the todos loaded action.
 
