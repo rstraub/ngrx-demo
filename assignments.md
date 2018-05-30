@@ -14,7 +14,7 @@ If you get stuck during the assignments you can always check out the solution br
       app: appReducer
     })
     ```
-    * Define an interface which describes the app state.
+    * Define an interface which describes the app state. Type the reducer you created in earlier with this interface.
     * Give the reducer function initial state with loading set to true.
 
 If everything went correctly you should see something in the state in the redux tools.
@@ -59,7 +59,7 @@ Our store is working, but now the only thing our application is doing is showing
 1. In this file create a new enum which will describe our action types.
 1. Add the action type: `TODOS_LOADED` and `LOADING_TODOS` to the enum.
 1. Create new [action creators](https://github.com/ngrx/platform/blob/master/docs/store/actions.md#typed-actions) in the file, It should implement from the ngrx `Action` interface. Do this for both action types.
-1. Now switch to the app reducer and add a new case to the switch. Here we add the `TODOS_LOADED` and `LOADING_TODOS` cases.
+1. Now switch to the app reducer and add a new case to the switch. Here we add the `TODOS_LOADED` and `LOADING_TODOS` cases. Also type our `action` parameter with the Actions union.
 1. We can now mutate the state. In the `TODOS_LOADED` case create a new state object in which the loading property is set to false. Use either the spread operator or Object.assign to do so easily. **Never, ever mutate the state directly.**
 1. Write another case where we handle the `LOADING_TODOS` action. Of course here the loading property should be set to true.
 1. In the home component dispatch the loading todos action before making the getTodos request to the service.
