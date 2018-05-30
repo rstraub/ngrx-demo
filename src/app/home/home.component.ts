@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   private readonly SNACKBAR_DURATION = 3000;
   private readonly DIALOG_SIZE = '500px';
 
-  constructor(private store: Store<AppState>, private snackBar: MatSnackBar, private dialog: MatDialog, private todoService: TodoService) {
+  constructor(private store: Store<AppState>, private snackBar: MatSnackBar, private dialog: MatDialog) {
   }
 
   ngOnInit() {

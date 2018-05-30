@@ -1,7 +1,6 @@
 import {createSelector} from '@ngrx/store';
-import {AppActionTypes} from './app.actions';
+import {AppActions, AppActionTypes} from './app.actions';
 import {Todo} from './models/todo';
-import {s} from '@angular/core/src/render3';
 
 export interface AppState {
   ui: {
@@ -33,7 +32,7 @@ const initialState: AppState = {
   todos: null
 };
 
-export function appReducer(state = initialState, action) {
+export function appReducer(state: AppState = initialState, action: AppActions): AppState {
   switch (action.type) {
     case AppActionTypes.TODOS_LOADED:
       return {
